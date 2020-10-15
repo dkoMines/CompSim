@@ -1,3 +1,5 @@
+from numpy import random
+
 verbose = True
 
 class Event:
@@ -16,10 +18,10 @@ class Event:
 		return f'E: {self.tp}, t: {self.atTime}'
 
 def exponential(n):
-	return n
+	return random.exponential(n)
 
 def geometric(n):
-	return n
+	return random.geometric(n)
 
 
 def runSIS(s,S):
