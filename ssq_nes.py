@@ -89,7 +89,7 @@ if __name__ == '__main__':
 
     x_bar = 0
     v_bar = 0
-    for i in range(len(v)):
+    for i in range(1,len(v)):
         v_bar = v_bar + (i-1)/i*((v[i]-x_bar)**2)
         x_bar = x_bar + 1/i * (v[i]-x_bar)
 
