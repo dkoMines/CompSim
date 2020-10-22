@@ -56,8 +56,11 @@ if __name__ == '__main__':
         if rN > 1.8:
             v.append(servers)
         v2.append(servers)
-        v_2 = v_2 + (t-t_1)*t_1/t * ((servers-x_2)**2)
-        x_2 = x_2 + (t-t_1)/t * (servers-x_2)
+        z = 0
+        if servers >= numServers/2:
+            z = 1
+        v_2 = v_2 + (t-t_1)*t_1/t * ((z-x_2)**2)
+        x_2 = x_2 + (t-t_1)/t * (z-x_2)
         if(servers < numServers and len(jobQueue)>0):
             eventInQ = jobQueue[0]
             jobQueue.pop(0)
@@ -70,12 +73,15 @@ if __name__ == '__main__':
         if rN > 1.8:
             v.append(servers)
         v2.append(servers)
-        v_2 = v_2 + (t-t_1)*t_1/t * ((servers-x_2)**2)
-        x_2 = x_2 + (t-t_1)/t * (servers-x_2)
+        z = 0
+        if servers >= numServers/2:
+            z = 1
+        v_2 = v_2 + (t-t_1)*t_1/t * ((z-x_2)**2)
+        x_2 = x_2 + (t-t_1)/t * (z-x_2)
         t_1 = t
     print("t value: "+str(t)+" New Job Count: "+str(newJobCount)+" Jobs Serviced: "+str(jobsServiced))
 
-    if False:
+    if True:
         for i in range(len(v)):
             if v[i] > numServers/2:
                 v[i]==1
