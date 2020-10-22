@@ -22,6 +22,10 @@ if __name__ == '__main__':
     jobsServiced = 0
 
     v = []
+    v2 = []
+    x_2 = 0
+    v_2 = 0
+    t_1 = 0
 
     ev1 = Event(random.exponential(2.0), 'ArrivalEvent', random.uniform(0.0, 2.0))
     eventList.append(ev1)
@@ -48,6 +52,12 @@ if __name__ == '__main__':
                 feedbackEvent = Event((t+random.exponential(1.0)), 'FeedbackEvent', (eventInQ.service/2.0))
                 eventList.append(feedbackEvent)
             servers -= 1
+        rN = random.exponential(2.0)
+        if rN > 1.8:
+            v.append(servers)
+        v2.append(servers)
+        v_2 = v_2 + (t-t_1)*t_1/t * ((servers-x_2)**2)
+        x_2 = x_2 + (t-t_1)/t * (servers-x_2)
         if(servers < numServers and len(jobQueue)>0):
             eventInQ = jobQueue[0]
             jobQueue.pop(0)
@@ -57,17 +67,47 @@ if __name__ == '__main__':
             servers += 1
             jobsServiced+=1
         rN = random.exponential(2.0)
-        if rN > 1.6:
+        if rN > 1.8:
             v.append(servers)
+        v2.append(servers)
+        v_2 = v_2 + (t-t_1)*t_1/t * ((servers-x_2)**2)
+        x_2 = x_2 + (t-t_1)/t * (servers-x_2)
+        t_1 = t
     print("t value: "+str(t)+" New Job Count: "+str(newJobCount)+" Jobs Serviced: "+str(jobsServiced))
-    lv = 0
-    bv = len(v)
-    avg = sum(v)/bv
-    sd = 0
-    for num in v:
-        if num > numServers/2:
-            lv += 1
-            sd += (num-avg)**2
-    sd = (sd/bv)**.5
-    print(f'Avg = {avg} sd = {sd}')
-    print(f'%={lv/bv} v={lv} big_V={bv}')
+
+    if False:
+        for i in range(len(v)):
+            if v[i] > numServers/2:
+                v[i]==1
+            else:
+                v[i]==0
+        for i in range(len(v2)):
+            if v2[i] > numServers/2:
+                v2[i]==1
+            else:
+                v2[i]==0
+
+    x_bar = 0
+    v_bar = 0
+    for i in range(len(v)):
+        v_bar = v_bar + (i-1)/i*((v[i]-x_bar)**2)
+        x_bar = x_bar + 1/i * (v[i]-x_bar)
+
+    print(f'1st way: x={x_bar} v={v_bar}')
+    print(f'2nd way: x={x_2} v={v_2}')
+
+
+
+    # lv = 0
+    # bv = len(v)
+    # avg = sum(v)/bv
+    # sd = 0
+    # for num in v:
+    #     if num > numServers/2:
+    #         lv += 1
+    #     sd += (num-avg)**2
+    # sd = (sd/bv)**.5
+    # print(f'Avg = {avg} sd = {sd}')
+    # print(f'%={lv/bv} v={lv} big_V={bv}')
+
+
